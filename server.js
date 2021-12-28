@@ -3,19 +3,19 @@ const express = require('express');
 const connectDB = require('./DB/connectDB');
 const personDB = require('./models/model')
 const app = express();
-
+// var id = mongoose.Types.ObjectId('61b8b7f731c2b94fd1fb5efa');
 
 //new Doc new Client 
 
-const customer = new personDB({name:"mohsen",age:50,favoritefood:["lazania","kosksi"]});
-customer.save((err)=>{
-   if(err) return console.log(err)
-} )
+// const customer = new personDB({name:"yesmine",age:14,favoritefood:["chappati","ma9rouna"]});
+// customer.save((err)=>{
+//    if(err) return console.log(err)
+// } )
  
 //saved
 // find all 
 const findAll = async()=>{
-    const data = await PersonDB.find();
+    const data = await personDB.find();
     try {
         
       console.log((data))
@@ -42,7 +42,7 @@ const Search = async ()=>{
 // find by id
 const SearchById = async ()=>{
     try{
-        const data = await personDB.findById({_id:'61c9a9ab1f8b3f442f525c49'});
+        const data = await personDB.findById({_id:'61cad70deae12a93621ff84c'});
         console.log(data)
     }catch(err){
         console.log(err)
@@ -50,76 +50,73 @@ const SearchById = async ()=>{
 }
 
 // SearchById()
-//--find/edit/save
-const FindEditSave=async()=>{
-    var chawarma='chawarma'
-    await Person.findById({_id:'61b8b7f731c2b94fd1fb5efa'},(error,result)=>{
-        if(error){
-            console.log(error)
-        }else{
-            result.favoriteFoods.push(chawarma)
-            result.save((error,update)=>{
-                if(error){
-                    console.log(error)
-                }else{
-                    console.log(update)
-                }
-            })
-        }
-    })
-}
 
-//FindEditSave()
-//Update 
+
+
+// --find/edit/save
+
+// personDB.findOne({_id: "61cad70deae12a93621ff84c"}, function (err, user) {
+//     user.name = "nader";
+//     user.age = 21;
+//     user.favoritefood = ['bozjaz',"cuscisz"];
+
+//     user.save(function (err) {
+//         if(err) {
+//             console.error('ERROR!');
+//         }
+//     });
+// });
 
 
 
 
-const query = {name:"mohsen"};
-const Updated = async ()=>{
-    const data = await personDB.findOneAndUpdate(query,{name:"jhon",favoritefoods :["chawarma","djej"],age:23},(err,data)=>{
+// const query =;
+const Update = async ()=>{
+ const data =await personDB.findOneAndUpdate( {name:"jhon"},{name:"nader",favoritefood:["hgdascdaz","hazdhazxdx"],age:23},(err,data)=>{
         try {
             console.log(data)
         } catch (err) {
             console.log(err)
         }
-    })
+       
+    }).clone()
+    
 }
 
-// Updated()
+// Update()
 //FindOne And Delete
 
 const userDeleted = {name:"mohsen"}
 const Delete = async()=>{
-    const delData = await personDB.findOneAndDelete({_id:"61c9c7845c1fe729dc956152"},(data,err)=>{
+    const delData = await personDB.findOneAndDelete(userDeleted,(data,err)=>{
         try {
             console.log("data deleted")
         } catch (err) {
             console.log(err)
         }
-    })
+    }).clone()
 }
-
+ 
 // Delete()
 
-const mohsen={name:'mohsen'}
-const mohsenDelete= async()=>{
-    await PersonDB.deleteMany(mohsen,(err,data)=>{
+const x={name:'nader'}
+const daliDelete= async()=>{
+    await personDB.deleteMany(x,(err,data)=>{
         try {
             console.log(data)
         } catch (err) {
             console.log(err)
         }
-    })
+    }).clone()
 }
-//mohsenDelete()
+// daliDelete()
 
 //chain search//
 
-const Search = {favoriteFood:"chappati"};
+const dali = {favoriteFood:"chappati"};
 const queryChain = async()=>{
 
-         Person.find(Search)
+         personDB.find(dali)
                .sort({name :1})
                .limit(2)
                .select({age:0})
@@ -135,7 +132,7 @@ const queryChain = async()=>{
       
         
   };
-  //queryChain()
+  queryChain()
 connectDB()
 const PORT = 5000 ;
 
